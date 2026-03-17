@@ -1,20 +1,16 @@
-import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import Header from "@/components/layout/Header";
+import { Colors } from "@/constants/colors";
 
 export default function Dev() {
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-        Dev
-      </Text>
+    <SafeAreaView
+      style={[{ backgroundColor: Colors.primaryBackground }]}
+      edges={["top"]}
+      className="flex-1"
+    >
+      <Header text="dev screen" />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

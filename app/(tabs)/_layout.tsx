@@ -9,6 +9,7 @@ export default function TabLayout() {
     >
       <Tabs.Screen name="index" />
       <Tabs.Screen name="transactions" />
+      <Tabs.Screen name="archives" />
       <Tabs.Screen name="unmatched" />
       <Tabs.Screen name="patterns" />
     </Tabs>

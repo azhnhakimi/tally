@@ -11,14 +11,22 @@ type CategorySpending = {
 
 type CategoryListProps = {
   data: CategorySpending[];
+  alwaysExpanded?: boolean;
 };
 
-export function CategoryList({ data }: CategoryListProps) {
+export function CategoryList({
+  data,
+  alwaysExpanded = false,
+}: CategoryListProps) {
   const [expanded, setExpanded] = useState(false);
 
   const sorted = [...data].sort((a, b) => b.amount - a.amount);
-  const displayed = expanded ? sorted : sorted.slice(0, 3);
-  const hasMore = sorted.length > 3;
+  const displayed = alwaysExpanded
+    ? sorted
+    : expanded
+      ? sorted
+      : sorted.slice(0, 3);
+  const hasMore = !alwaysExpanded && sorted.length > 3;
 
   return (
     <View>

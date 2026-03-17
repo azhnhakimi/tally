@@ -19,6 +19,12 @@ const TABS: {
     iconActive: "receipt",
   },
   {
+    name: "archives",
+    label: "ARCHIVES",
+    icon: "archive-outline",
+    iconActive: "archive",
+  },
+  {
     name: "unmatched",
     label: "UNMATCHED",
     icon: "chatbubble-outline",
@@ -70,7 +76,10 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
                 size={22}
                 color="#111111"
               />
-              <Text className="text-[8px] font-black text-[#111111] tracking-widest">
+              <Text
+                className="text-[8px] font-semibold text-[#111111] tracking-widest"
+                allowFontScaling={false}
+              >
                 {tab.label}
               </Text>
             </Pressable>
