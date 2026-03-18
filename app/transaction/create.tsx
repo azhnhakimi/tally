@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,11 +16,19 @@ import { supabase } from "@/lib/supabase";
 
 export default function CreateTransaction() {
   const router = useRouter();
+  const { prefill_date, prefill_raw_sms, failed_sms_id } =
+    useLocalSearchParams<{
+      prefill_date?: string;
+      prefill_raw_sms?: string;
+      failed_sms_id?: string;
+    }>();
 
   const [amount, setAmount] = useState("");
   const [merchant, setMerchant] = useState("");
   const [category, setCategory] = useState<Category>("miscellaneous");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    prefill_date ? new Date(prefill_date) : new Date(),
+  );
   const [saving, setSaving] = useState(false);
   const [validationMessage, setValidationMessage] = useState<string | null>(
     null,
@@ -58,6 +66,10 @@ export default function CreateTransaction() {
       user_id: USER_ID,
     });
 
+    if (!error && failed_sms_id) {
+      await supabase.from("failed_sms").delete().eq("id", failed_sms_id);
+    }
+
     setSaving(false);
     if (!error) router.back();
   };
@@ -68,7 +80,7 @@ export default function CreateTransaction() {
       edges={["top"]}
       className="flex-1"
     >
-      <Header text="create" backVisible={true} />
+      <Header text="create" backVisible />
 
       {validationMessage && (
         <BrutalistValidationAlert
@@ -82,6 +94,38 @@ export default function CreateTransaction() {
         contentContainerClassName="gap-5 px-6 mt-6 pb-8"
         showsVerticalScrollIndicator={false}
       >
+        {prefill_raw_sms && (
+          <View
+            style={{
+              borderWidth: 2.5,
+              borderColor: "#111111",
+              backgroundColor: Colors.appLightRed,
+              padding: 12,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "SpaceGrotesk_700Bold",
+                fontSize: 10,
+                color: "#64748b",
+                textTransform: "uppercase",
+                marginBottom: 4,
+              }}
+            >
+              Raw SMS
+            </Text>
+            <Text
+              style={{
+                fontFamily: "SpaceGrotesk_400Regular",
+                fontSize: 12,
+                color: "#374151",
+              }}
+            >
+              {prefill_raw_sms}
+            </Text>
+          </View>
+        )}
+
         <FormField
           label="Amount"
           value={amount}
