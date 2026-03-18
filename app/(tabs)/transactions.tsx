@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Header from "@/components/layout/Header";
+import AddTransactionBtn from "@/components/transactions/AddTransactionBtn";
 import { MonthNavigator } from "@/components/transactions/MonthNavigator";
 import TransactionItem from "@/components/transactions/TransactionItem";
 import { type Category } from "@/constants/categories";
@@ -45,6 +46,10 @@ export default function Transactions() {
       className="flex-1"
     >
       <Header text="transactions" />
+
+      <View className="mt-6">
+        <AddTransactionBtn />
+      </View>
 
       <View className="mx-6 mt-6 flex-1">
         <MonthNavigator

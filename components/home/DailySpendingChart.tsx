@@ -25,7 +25,7 @@ export function DailySpendingChart({ data }: DailySpendingChartProps) {
 
     return {
       value: item.amount,
-      label: isLabelDay ? `DAY ${day}` : "",
+      label: isLabelDay ? `${day}` : "",
       frontColor: "#111111",
     };
   });

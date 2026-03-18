@@ -38,6 +38,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="transaction/[id]" />
+        <Stack.Screen name="transaction/create" />
       </Stack>
       <StatusBar style="dark" />
     </SafeAreaProvider>

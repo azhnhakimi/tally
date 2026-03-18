@@ -9,6 +9,34 @@ type AlertConfig = {
   confirmColor?: string;
 };
 
+const overlayStyle = {
+  position: "absolute" as const,
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,0.6)",
+  justifyContent: "center" as const,
+  alignItems: "center" as const,
+  paddingHorizontal: 24,
+};
+
+const cardShadow = {
+  position: "absolute" as const,
+  backgroundColor: "#111111",
+  top: 5,
+  left: 5,
+  right: -5,
+  bottom: -5,
+};
+
+const cardInner = {
+  backgroundColor: "#ffffff",
+  borderWidth: 2.5,
+  borderColor: "#111111",
+  padding: 24,
+};
+
 export function BrutalistAlert({
   config,
   onCancel,
@@ -17,35 +45,11 @@ export function BrutalistAlert({
   onCancel: () => void;
 }) {
   return (
-    <Modal transparent animationType="fade">
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0,0,0,0.5)",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingHorizontal: 24,
-        }}
-      >
+    <Modal transparent animationType="fade" statusBarTranslucent>
+      <View style={overlayStyle}>
         <View style={{ position: "relative", width: "100%" }}>
-          <View
-            style={{
-              position: "absolute",
-              backgroundColor: "#111111",
-              top: 5,
-              left: 5,
-              right: -5,
-              bottom: -5,
-            }}
-          />
-          <View
-            style={{
-              backgroundColor: "#ffffff",
-              borderWidth: 2.5,
-              borderColor: "#111111",
-              padding: 24,
-            }}
-          >
+          <View style={cardShadow} />
+          <View style={cardInner}>
             <Text
               style={{
                 fontFamily: "SpaceGrotesk_700Bold",
@@ -130,35 +134,11 @@ export function BrutalistValidationAlert({
   onClose: () => void;
 }) {
   return (
-    <Modal transparent animationType="fade">
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0,0,0,0.5)",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingHorizontal: 24,
-        }}
-      >
+    <Modal transparent animationType="fade" statusBarTranslucent>
+      <View style={overlayStyle}>
         <View style={{ position: "relative", width: "100%" }}>
-          <View
-            style={{
-              position: "absolute",
-              backgroundColor: "#111111",
-              top: 5,
-              left: 5,
-              right: -5,
-              bottom: -5,
-            }}
-          />
-          <View
-            style={{
-              backgroundColor: "#ffffff",
-              borderWidth: 2.5,
-              borderColor: "#111111",
-              padding: 24,
-            }}
-          >
+          <View style={cardShadow} />
+          <View style={cardInner}>
             <Text
               style={{
                 fontFamily: "SpaceGrotesk_700Bold",
