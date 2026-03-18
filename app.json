@@ -18,7 +18,9 @@
         "monochromeImage": "./assets/icons/adaptive-icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.yourname.tally",
+      "versionCode": 1
     },
     "web": {
       "output": "static",
@@ -40,6 +42,19 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f89279b6-7c6c-4bb6-bcc6-cd2b029dfaf4"
+      }
+    },
+    "owner": "azhnhakimi",
+    "updates": {
+      "url": "https://u.expo.dev/f89279b6-7c6c-4bb6-bcc6-cd2b029dfaf4"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
