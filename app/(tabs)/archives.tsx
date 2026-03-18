@@ -19,7 +19,7 @@ export default function Archives() {
   useFocusEffect(
     useCallback(() => {
       refetch();
-    }, []),
+    }, [refetch]),
   );
 
   const goToPrev = () =>
@@ -64,7 +64,7 @@ export default function Archives() {
                 <CategoryList data={categorySpending} alwaysExpanded />
               </View>
             ) : (
-              <Text className="font-semibold text-slate-500 text-center mt-32">
+              <Text className="font-semibold text-slate-500 text-center mt-32 uppercase">
                 No transactions for this month.
               </Text>
             )}

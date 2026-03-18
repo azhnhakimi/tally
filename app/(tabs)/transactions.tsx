@@ -25,8 +25,9 @@ export default function Transactions() {
   useFocusEffect(
     useCallback(() => {
       refetch();
-    }, [currentDate]),
+    }, [refetch]),
   );
+
   const goToPrev = () =>
     setCurrentDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1));
 

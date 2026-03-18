@@ -125,9 +125,9 @@ export default function TransactionDetail() {
     <SafeAreaView
       style={{ backgroundColor: Colors.primaryBackground }}
       edges={["top", "bottom"]}
-      className="flex-1"
+      className="flex-1 pb-6"
     >
-      <Header text="transaction" />
+      <Header text="transaction" backVisible={true} />
 
       {validationMessage && (
         <BrutalistValidationAlert
@@ -144,7 +144,7 @@ export default function TransactionDetail() {
       )}
 
       <ScrollView
-        className="flex-1"
+        className="flex-1 pb-6"
         contentContainerClassName="gap-5 px-6 mt-6 pb-8"
         showsVerticalScrollIndicator={false}
       >

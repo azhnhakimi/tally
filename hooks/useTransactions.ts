@@ -1,7 +1,7 @@
 import { type Category } from "@/constants/categories";
 import { USER_ID } from "@/constants/user";
 import { supabase } from "@/lib/supabase";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export type Transaction = {
   id: string;
@@ -22,7 +22,7 @@ export function useTransactions(date: Date) {
   const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
   const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59).toISOString();
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     setLoading(true);
     const { data } = await supabase
       .from("transactions")
@@ -34,7 +34,7 @@ export function useTransactions(date: Date) {
 
     setTransactions(data ?? []);
     setLoading(false);
-  };
+  }, [startOfMonth, endOfMonth]);
 
   useEffect(() => {
     fetchTransactions();
@@ -58,7 +58,7 @@ export function useTransactions(date: Date) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [date]);
+  }, [fetchTransactions]);
 
   return { transactions, loading, refetch: fetchTransactions };
 }

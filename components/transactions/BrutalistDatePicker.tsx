@@ -227,10 +227,12 @@ export function BrutalistDatePicker({
                 </View>
 
                 {weeks.map((week, wi) => (
-                  <View key={wi} style={{ flexDirection: "row", gap: 2 }}>
+                  <View key={wi} style={{ flexDirection: "row" }}>
                     {week.map((day, di) => {
                       if (!day) {
-                        return <View key={di} style={{ flex: 1 }} />;
+                        return (
+                          <View key={di} style={{ flex: 1, aspectRatio: 1 }} />
+                        );
                       }
                       const sel = isSelected(day);
                       const tod = isToday(day);
@@ -247,8 +249,12 @@ export function BrutalistDatePicker({
                             alignItems: "center",
                             justifyContent: "center",
                             backgroundColor: sel ? Colors.appYellow : "#ffffff",
-                            borderWidth: sel ? 2.5 : tod ? 1.5 : 0,
-                            borderColor: "#111111",
+                            borderWidth: 2.5,
+                            borderColor: sel
+                              ? "#111111"
+                              : tod
+                                ? "#111111"
+                                : "transparent",
                           }}
                         >
                           <Text
