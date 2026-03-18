@@ -1,0 +1,1 @@
+export const USER_ID = process.env.EXPO_PUBLIC_USER_ID!;

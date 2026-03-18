@@ -1,5 +1,6 @@
+import { BrutalistCard } from "@/components/ui/BrutalistCard";
 import { Colors } from "@/constants/colors";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 type MonthSummaryCardProps = {
   date: Date;
@@ -13,16 +14,10 @@ export function MonthSummaryCard({ date, total }: MonthSummaryCardProps) {
   });
 
   return (
-    <View
-      className="p-6 border-[2.5px] border-black"
-      style={{
-        backgroundColor: Colors.appYellow,
-        shadowColor: "#111111",
-        shadowOffset: { width: 5, height: 5 },
-        shadowOpacity: 1,
-        shadowRadius: 0,
-        elevation: 4,
-      }}
+    <BrutalistCard
+      backgroundColor={Colors.appYellow}
+      shadowOffset={5}
+      style={{ padding: 16 }}
     >
       <Text className="font-semibold uppercase text-xl text-black mb-6">
         {label}
@@ -33,6 +28,6 @@ export function MonthSummaryCard({ date, total }: MonthSummaryCardProps) {
       <Text className="text-black font-bold text-5xl">
         RM{total.toFixed(2)}
       </Text>
-    </View>
+    </BrutalistCard>
   );
 }

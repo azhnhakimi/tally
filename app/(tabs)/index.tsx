@@ -1,15 +1,25 @@
 import Feather from "@expo/vector-icons/Feather";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { MonthSummaryCard } from "@/components/archives/MonthSummaryCard";
 import { CategoryList } from "@/components/home/CategoryList";
 import { DailySpendingChart } from "@/components/home/DailySpendingChart";
-import { Colors } from "@/constants/colors";
-import { mockCategorySpending, mockDailySpending } from "@/constants/mockData";
+import { useDashboard } from "@/hooks/useDashboard";
+import { useTransactions } from "@/hooks/useTransactions";
+import { useCallback } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const { transactions, loading, refetch } = useTransactions(new Date());
+  const { total, categorySpending, dailySpending } = useDashboard(transactions);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, []),
+  );
 
   return (
     <SafeAreaView className="flex-1" edges={["top"]}>
@@ -46,42 +56,33 @@ export default function Home() {
           </Pressable>
         </View>
 
-        <View
-          className="p-6 mx-6 border-[2.5px] border-black"
-          style={{
-            backgroundColor: Colors.appYellow,
-            shadowColor: "#111111",
-            shadowOffset: { width: 5, height: 5 },
-            shadowOpacity: 1,
-            shadowRadius: 0,
-            elevation: 4,
-          }}
-        >
-          <Text className="font-semibold uppercase text-xl text-black mb-6">
-            {new Date().toLocaleDateString("en-MY", {
-              month: "long",
-              year: "numeric",
-            })}
-          </Text>
-          <Text className="text-slate-600 text-lg font-semibold mb-2">
-            TOTAL SPENT
-          </Text>
-          <Text className="text-black font-bold text-5xl">RM1100.00</Text>
+        <View className="px-6">
+          <MonthSummaryCard date={new Date()} total={total} />
         </View>
 
-        <View className="px-6">
-          <Text className="text-slate-700 text-2xl font-bold mb-1">
-            CATEGORIES
-          </Text>
-          <CategoryList data={mockCategorySpending} />
-        </View>
+        {categorySpending.length > 0 && (
+          <View className="px-6">
+            <Text className="text-slate-700 text-2xl font-bold mb-3">
+              CATEGORIES
+            </Text>
+            <CategoryList data={categorySpending} />
+          </View>
+        )}
 
-        <View className="px-6">
-          <Text className="text-slate-700 text-2xl font-bold mb-1">
-            DAILY SPENDING
+        {dailySpending.length > 0 && (
+          <View className="px-6">
+            <Text className="text-slate-700 text-2xl font-bold mb-3">
+              DAILY SPENDING
+            </Text>
+            <DailySpendingChart data={dailySpending} />
+          </View>
+        )}
+
+        {!loading && transactions.length === 0 && (
+          <Text className="font-semibold text-slate-500 text-center mt-8 uppercase">
+            No transactions this month.
           </Text>
-          <DailySpendingChart data={mockDailySpending} />
-        </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

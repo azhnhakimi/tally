@@ -77,7 +77,7 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
                 color="#111111"
               />
               <Text
-                className="text-[8px] font-semibold text-[#111111] tracking-widest"
+                className="text-[8px] font-semibold text-[#111111]"
                 allowFontScaling={false}
               >
                 {tab.label}

@@ -32,9 +32,12 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <SafeAreaProvider style={{ backgroundColor: Colors.primaryBackground }}>
+    <SafeAreaProvider
+      style={{ backgroundColor: Colors.primaryBackground, paddingTop: 16 }}
+    >
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="transaction/[id]" />
       </Stack>
       <StatusBar style="dark" />
     </SafeAreaProvider>

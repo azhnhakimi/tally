@@ -1,34 +1,37 @@
-import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Header from "@/components/layout/Header";
-import AddTransactionBtn from "@/components/transactions/AddTransactionBtn";
 import { MonthNavigator } from "@/components/transactions/MonthNavigator";
 import TransactionItem from "@/components/transactions/TransactionItem";
+import { type Category } from "@/constants/categories";
 import { Colors } from "@/constants/colors";
-import { mockTransactions } from "@/constants/mockData";
+import { useTransactions } from "@/hooks/useTransactions";
 
 export default function Transactions() {
+  const router = useRouter();
+
   const [currentDate, setCurrentDate] = useState(new Date());
+  const { transactions, loading, refetch } = useTransactions(currentDate);
 
-  const filtered = mockTransactions
-    .filter((t) => {
-      const d = new Date(t.date);
-      return (
-        d.getMonth() === currentDate.getMonth() &&
-        d.getFullYear() === currentDate.getFullYear()
-      );
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  const goToPrev = () => {
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [currentDate]),
+  );
+  const goToPrev = () =>
     setCurrentDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1));
-  };
 
-  const goToNext = () => {
+  const goToNext = () =>
     setCurrentDate((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1));
-  };
 
   const goToNow = () => {
     setCurrentDate(new Date());
@@ -38,32 +41,56 @@ export default function Transactions() {
     <SafeAreaView
       style={{ backgroundColor: Colors.primaryBackground }}
       edges={["top"]}
-      className="flex-1 gap-4"
+      className="flex-1"
     >
       <Header text="transactions" />
-      <AddTransactionBtn />
 
-      <View className="mx-6 flex-1">
+      <View className="mx-6 mt-6 flex-1">
         <MonthNavigator
           date={currentDate}
           onPrev={goToPrev}
           onNext={goToNext}
           onNow={goToNow}
         />
-        <FlatList
-          data={filtered}
-          keyExtractor={(item) => item.id}
-          contentContainerClassName="gap-3 pb-8"
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <TransactionItem
-              title={item.title}
-              amount={item.amount}
-              category={item.category}
-              date={item.date}
-            />
-          )}
-        />
+
+        {loading ? (
+          <ActivityIndicator size="large" color="#111111" />
+        ) : transactions.length === 0 ? (
+          <Text className="font-semibold text-slate-500 text-center mt-8 uppercase">
+            No transactions this month.
+          </Text>
+        ) : (
+          <FlatList
+            data={transactions}
+            keyExtractor={(item) => item.id}
+            contentContainerClassName="gap-3 pb-8"
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Pressable
+                android_ripple={null}
+                onPress={() =>
+                  router.push({
+                    pathname: "/transaction/[id]",
+                    params: {
+                      id: item.id,
+                      amount: item.amount.toFixed(2),
+                      merchant: item.merchant,
+                      category: item.category,
+                      transaction_date: item.transaction_date,
+                    },
+                  })
+                }
+              >
+                <TransactionItem
+                  title={item.merchant}
+                  amount={item.amount.toFixed(2)}
+                  category={item.category as Category}
+                  date={item.transaction_date}
+                />
+              </Pressable>
+            )}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

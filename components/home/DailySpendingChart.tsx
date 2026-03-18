@@ -14,8 +14,14 @@ const CHART_WIDTH = Dimensions.get("window").width - 48;
 
 export function DailySpendingChart({ data }: DailySpendingChartProps) {
   const chartData = data.map((item, index) => {
-    const day = index + 1;
-    const isLabelDay = day === 1 || day === 15 || day === data.length;
+    const day = new Date(item.date).getDate();
+    const isFirst = index === 0;
+    const isLast = index === data.length - 1;
+    const isMid = day === 15;
+    const isLabelDay =
+      isFirst ||
+      (isMid && data.length > 1) ||
+      (isLast && data.length > 1 && day !== 1);
 
     return {
       value: item.amount,
@@ -23,6 +29,8 @@ export function DailySpendingChart({ data }: DailySpendingChartProps) {
       frontColor: "#111111",
     };
   });
+
+  const barWidth = Math.min(20, Math.floor((CHART_WIDTH - 64) / data.length));
 
   return (
     <View
@@ -39,9 +47,10 @@ export function DailySpendingChart({ data }: DailySpendingChartProps) {
         data={chartData}
         width={CHART_WIDTH - 64}
         height={180}
-        barWidth={Math.floor((CHART_WIDTH - 64) / data.length)}
+        barWidth={barWidth}
         spacing={0}
         noOfSections={3}
+        maxValue={Math.max(data[0]?.amount * 1.5, 100)}
         yAxisTextStyle={{
           fontSize: 9,
           color: "#111111",
@@ -53,7 +62,7 @@ export function DailySpendingChart({ data }: DailySpendingChartProps) {
           fontFamily: "SpaceGrotesk_700Bold",
           width: 36,
           textAlign: "center",
-          marginLeft: -18,
+          marginLeft: -(36 / 2) + barWidth / 2,
         }}
         yAxisColor="#111111"
         xAxisColor="#111111"
