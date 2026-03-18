@@ -4,7 +4,7 @@
     "slug": "tally",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/adaptive-icon.png",
     "scheme": "tally",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -31,7 +31,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/icon/splash.png",
+          "image": "./assets/icons/splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
