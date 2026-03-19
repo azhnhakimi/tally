@@ -4,7 +4,7 @@
     "slug": "tally",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/adaptive-icon.png",
+    "icon": "./assets/icons/updated-adaptive-icon.png",
     "scheme": "tally",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,9 +13,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
-        "monochromeImage": "./assets/icons/adaptive-icon.png"
+        "backgroundColor": "#121212",
+        "foregroundImage": "./assets/icons/updated-adaptive-icon.png",
+        "monochromeImage": "./assets/icons/updated-adaptive-icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -31,10 +31,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/icons/splash.png",
+          "image": "./assets/icons/updated-splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F8F5F5"
         }
       ],
       "expo-font"
